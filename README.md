@@ -2,7 +2,7 @@
 
 1. Fork this Repository.
 2. Start a new ubuntu vm.
-3. Install docker and zsh
+3. Install docker and zsh:
 ```bash
 curl https://raw.githubusercontent.com/ics-unisg/cicd/main/get-scs-base.sh | sh
 ```
