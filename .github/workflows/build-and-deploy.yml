@@ -68,3 +68,4 @@ jobs:
           sudo docker-compose up --no-start
           sudo docker run --rm --net scs-asse --name main -d traefik
           sudo docker run --rm --net scs-asse --name hello -d hello-world
+          
