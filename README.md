@@ -1,5 +1,5 @@
 # CI/CD
-
+ 
 1. Fork this Repository.
 2. Start a new ubuntu vm.
 3. Install docker and zsh:
