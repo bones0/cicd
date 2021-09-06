@@ -65,7 +65,5 @@ jobs:
           touch acme.json
           sudo chmod 0600 acme.json
           sudo echo "PUB_IP=$(wget -qO- http://ipecho.net/plain | xargs echo)" | sed -e 's/\./-/g' > .env
-          sudo docker-compose up --no-start
-          sudo docker run --rm --net scs-asse --name main -d traefik
-          sudo docker run --rm --net scs-asse --name hello -d hello-world
+          sudo docker-compose up -d
           
