@@ -48,16 +48,12 @@ services:
       - "traefik.http.routers.app.entryPoints=web,websecure"
       - "traefik.http.routers.app.tls.certresolver=le"
       
-  node:
-    image: node:12-alpine
-    command: sh -c "yarn install && yarn run dev"
-    working_dir: /node
+  whoami:
+    image: "traefik/whoami"
+    container_name: "simple-service"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.node.rule=Host(`node.${PUB_IP}.nip.io`)"
-      - "traefik.http.routers.node.service=node"
-      - "traefik.http.services.node.loadbalancer.server.port=8080"
-      - "traefik.http.routers.node.tls=true"
-      - "traefik.http.routers.node.entryPoints=web,websecure"
-      - "traefik.http.routers.node.tls.certresolver=le"
- 
+      - "traefik.http.routers.whoami.rule=Host(`whoami.${PUB_IP}.nip.io`)"
+      - "traefik.http.routers.whoami.entrypoints=websecure"
+      - "traefik.http.routers.whoami.tls.certresolver=le"
+
