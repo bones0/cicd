@@ -47,3 +47,17 @@ services:
       - "traefik.http.routers.app.tls=true"
       - "traefik.http.routers.app.entryPoints=web,websecure"
       - "traefik.http.routers.app.tls.certresolver=le"
+      
+  node:
+    image: node:12-alpine
+    command: sh -c "yarn install && yarn run dev"
+    working_dir: /node
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.node.rule=Host(`node.${PUB_IP}.nip.io`)"
+      - "traefik.http.routers.node.service=node"
+      - "traefik.http.services.node.loadbalancer.server.port=8080"
+      - "traefik.http.routers.node.tls=true"
+      - "traefik.http.routers.node.entryPoints=web,websecure"
+      - "traefik.http.routers.node.tls.certresolver=le"
+ 
