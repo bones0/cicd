@@ -62,8 +62,9 @@ jobs:
         KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
           cd /home/${{ secrets.SSH_USER }}/
-          touch acme.json
-          sudo chmod 0600 acme.json
+          mkdir ./letsencrypt
+          touch ./letsencrypt/acme.json
+          sudo chmod 0600 ./letsencrypt/acme.json
           sudo echo "PUB_IP=$(wget -qO- http://ipecho.net/plain | xargs echo)" | sed -e 's/\./-/g' > .env
           sudo docker-compose up -d
           
