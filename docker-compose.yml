@@ -56,7 +56,7 @@ services:
       # Get routes from http
       - "traefik.http.routers.whoami.rule=Host(`whoami.${PUB_IP}.nip.io`)"
       - "traefik.http.routers.whoami.service=whoami"
-      - "traefik.http.services.whoami.loadbalancer.server.port=8080"
+      # - "traefik.http.services.whoami.loadbalancer.server.port=80"
       - "traefik.http.routers.whoami.entrypoints=web"
       # Redirect these routes to https
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
