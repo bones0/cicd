@@ -11,11 +11,11 @@ services:
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.web.address=:80"
       - "--entrypoints.websecure.address=:443"
-      - "--certificatesresolvers.le.acme.httpchallenge=true"
-      - "--certificatesresolvers.le.acme.httpchallenge.entrypoint=web"
-      - "--certificatesresolvers.le.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
-      - "--certificatesresolvers.le.acme.email=martin.eigenmann@unisg.ch"
-      - "--certificatesresolvers.le.acme.storage=/letsencrypt/acme.json"
+#      - "--certificatesresolvers.le.acme.httpchallenge=true"
+#      - "--certificatesresolvers.le.acme.httpchallenge.entrypoint=web"
+#      - "--certificatesresolvers.le.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+#      - "--certificatesresolvers.le.acme.email=martin.eigenmann@unisg.ch"
+#      - "--certificatesresolvers.le.acme.storage=/letsencrypt/acme.json"
     ports:
       - "80:80"
       - "443:443"
@@ -32,21 +32,21 @@ services:
 #      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
   
 
-  app:
-    image: openjdk
-    container_name: clientone
-    command: "java -jar /data/app-0.1.0.jar"
-    restart: unless-stopped
-    volumes:
-      - ./:/data/
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.app.rule=Host(`app.${PUB_IP}.nip.io`)"
-      - "traefik.http.routers.app.service=app"
-      - "traefik.http.services.app.loadbalancer.server.port=8080"
-      - "traefik.http.routers.app.tls=true"
-      - "traefik.http.routers.app.entryPoints=web,websecure"
-      - "traefik.http.routers.app.tls.certresolver=le"
+ # app:
+ #   image: openjdk
+ #   container_name: clientone
+ #   command: "java -jar /data/app-0.1.0.jar"
+ #   restart: unless-stopped
+ #   volumes:
+ #     - ./:/data/
+ #   labels:
+ #     - "traefik.enable=true"
+ #     - "traefik.http.routers.app.rule=Host(`app.${PUB_IP}.nip.io`)"
+ #     - "traefik.http.routers.app.service=app"
+ #     - "traefik.http.services.app.loadbalancer.server.port=8080"
+ #     - "traefik.http.routers.app.tls=true"
+ #     - "traefik.http.routers.app.entryPoints=web,websecure"
+ #     - "traefik.http.routers.app.tls.certresolver=le"
       
   whoami:
     image: "traefik/whoami"
@@ -55,9 +55,9 @@ services:
       - "traefik.enable=true"
       # Get routes from http
       - "traefik.http.routers.whoami.rule=Host(`whoami.${PUB_IP}.nip.io`)"
-      - "traefik.http.routers.whoami.service=whoami"
-      - "traefik.http.services.whoami.loadbalancer.server.port=80"
-      - "traefik.http.routers.whoami.entrypoints=web"
+#      - "traefik.http.routers.whoami.service=whoami"
+#      - "traefik.http.services.whoami.loadbalancer.server.port=80"
+#      - "traefik.http.routers.whoami.entrypoints=web"
       # Middleware-Test 
       #- traefik.http.routers.whoami.middlewares=auth
 #      - traefik.http.middlewares.auth.basicauth.users=test:xxx
