@@ -55,12 +55,12 @@ services:
       - "traefik.enable=true"
       # Get routes from http
       - "traefik.http.routers.whoami.rule=Host(`whoami.${PUB_IP}.nip.io`)"
- #     - "traefik.http.routers.whoami.service=whoami"
+      - "traefik.http.routers.whoami.service=whoami"
       - "traefik.http.services.whoami.loadbalancer.server.port=80"
-#      - "traefik.http.routers.whoami.entrypoints=web"
+      - "traefik.http.routers.whoami.entrypoints=web"
       # Middleware-Test 
-      - traefik.http.routers.whoami.middlewares=auth
-      - traefik.http.middlewares.auth.basicauth.users=test:xxx
+      #- traefik.http.routers.whoami.middlewares=auth
+#      - traefik.http.middlewares.auth.basicauth.users=test:xxx
       # Redirect these routes to https
 #      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
 #      - "traefik.http.routers.whoami.middlewares=redirect-to-https@docker"
