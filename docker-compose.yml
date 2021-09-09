@@ -1,29 +1,58 @@
 version: "3.3"
 
 services:
-  reverse-proxy:
-    image: "traefik:v2.5"
-    container_name: reverseproxy
+  traefik:
+    image: "traefik:v2.0.1"
     command:
-      - "--log.level=DEBUG"
-      - "--api.insecure=true"
-      - "--providers.docker=true"
-      - "--providers.docker.exposedbydefault=false"
-      - "--entrypoints.web.address=:80"
-      - "--entrypoints.websecure.address=:443"
+      - --entrypoints.web.address=:80
+      - --providers.docker
+      - --api.insecure
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+
+  my-app:
+    image: containous/whoami:v1.3.0
+    labels:
+      - "traefik.http.routers.my-app.rule=Host(`app.${PUB_IP}.nip.io`)"
+
+# Dashboard (https://localhost:8080)
+# Route (http://whoami.docker.localhost/)
+
+
+
+
+
+
+
+#version: "3.3"
+
+#services:
+#  reverse-proxy:
+#    image: "traefik:v2.5"
+#    container_name: reverseproxy
+#    command:
+#      - "--log.level=DEBUG"
+#      - "--api.insecure=true"
+#      - "--providers.docker=true"
+#      - "--providers.docker.exposedbydefault=false"
+#      - "--entrypoints.web.address=:80"
+#      - "--entrypoints.websecure.address=:443"
 #      - "--certificatesresolvers.le.acme.httpchallenge=true"
 #      - "--certificatesresolvers.le.acme.httpchallenge.entrypoint=web"
 #      - "--certificatesresolvers.le.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
 #      - "--certificatesresolvers.le.acme.email=martin.eigenmann@unisg.ch"
 #      - "--certificatesresolvers.le.acme.storage=/letsencrypt/acme.json"
-    ports:
-      - "80:80"
-      - "443:443"
-      - "8080:8080"
-    volumes:
-      - "./letsencrypt:/letsencrypt"
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
-    restart: unless-stopped
+#    ports:
+#      - "80:80"
+#      - "443:443"
+#      - "8080:8080"
+#    volumes:
+#      - "./letsencrypt:/letsencrypt"
+#      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+#    restart: unless-stopped
 #    labels:
 #      - "traefik.enable=true"
 #      - "traefik.http.routers.http-catchall.rule=hostregexp(`{host:.+}`)"
@@ -48,13 +77,13 @@ services:
  #     - "traefik.http.routers.app.entryPoints=web,websecure"
  #     - "traefik.http.routers.app.tls.certresolver=le"
       
-  whoami:
-    image: "traefik/whoami"
-    container_name: "simple-service"
-    labels:
-      - "traefik.enable=true"
+#  whoami:
+#    image: "traefik/whoami"
+#    container_name: "simple-service"
+#    labels:
+#      - "traefik.enable=true"
       # Get routes from http
-      - "traefik.http.routers.whoami.rule=Host(`whoami.${PUB_IP}.nip.io`)"
+#      - "traefik.http.routers.whoami.rule=Host(`whoami.${PUB_IP}.nip.io`)"
 #      - "traefik.http.routers.whoami.service=whoami"
 #      - "traefik.http.services.whoami.loadbalancer.server.port=80"
 #      - "traefik.http.routers.whoami.entrypoints=web"
