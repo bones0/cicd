@@ -1,57 +1,57 @@
-version: "3.3"
-
-services:
-  traefik:
-    image: "traefik:v2.0.1"
-    command:
-      - "--log.level=DEBUG"
-      - "--entrypoints.web.address=:80"
-      - "--providers.docker"
-      - "--api.insecure"
-    ports:
-      - "80:80"
-      - "8080:8080"
-    volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
-
-  my-app:
-    image: containous/whoami:v1.3.0
-    labels:
-      - "traefik.http.routers.my-app.rule=Host(`whoami.86-119-34-194.nip.io`)"
-
-
-
-
-
-
-
-
 #version: "3.3"
 
 #services:
-#  reverse-proxy:
-#    image: "traefik:v2.5"
-#    container_name: reverseproxy
+#  traefik:
+#    image: "traefik:v2.0.1"
 #    command:
 #      - "--log.level=DEBUG"
-#      - "--api.insecure=true"
-#      - "--providers.docker=true"
-#      - "--providers.docker.exposedbydefault=false"
 #      - "--entrypoints.web.address=:80"
-#      - "--entrypoints.websecure.address=:443"
-#      - "--certificatesresolvers.le.acme.httpchallenge=true"
-#      - "--certificatesresolvers.le.acme.httpchallenge.entrypoint=web"
-#      - "--certificatesresolvers.le.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
-#      - "--certificatesresolvers.le.acme.email=martin.eigenmann@unisg.ch"
-#      - "--certificatesresolvers.le.acme.storage=/letsencrypt/acme.json"
+#      - "--providers.docker"
+#      - "--api.insecure"
 #    ports:
 #      - "80:80"
-#      - "443:443"
 #      - "8080:8080"
 #    volumes:
-#      - "./letsencrypt:/letsencrypt"
 #      - "/var/run/docker.sock:/var/run/docker.sock:ro"
-#    restart: unless-stopped
+#
+#  my-app:
+#    image: containous/whoami:v1.3.0
+#    labels:
+#      - "traefik.http.routers.my-app.rule=Host(`whoami.86-119-34-194.nip.io`)"
+
+
+
+
+
+
+
+
+version: "3.3"
+
+services:
+  reverse-proxy:
+    image: "traefik:v2.5"
+    container_name: reverseproxy
+    command:
+      - "--log.level=DEBUG"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.le.acme.httpchallenge=true"
+      - "--certificatesresolvers.le.acme.httpchallenge.entrypoint=web"
+      - "--certificatesresolvers.le.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+      - "--certificatesresolvers.le.acme.email=martin.eigenmann@unisg.ch"
+      - "--certificatesresolvers.le.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - "./letsencrypt:/letsencrypt"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    restart: unless-stopped
 #    labels:
 #      - "traefik.enable=true"
 #      - "traefik.http.routers.http-catchall.rule=hostregexp(`{host:.+}`)"
@@ -60,44 +60,46 @@ services:
 #      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
   
 
- # app:
- #   image: openjdk
- #   container_name: clientone
- #   command: "java -jar /data/app-0.1.0.jar"
- #   restart: unless-stopped
- #   volumes:
- #     - ./:/data/
- #   labels:
- #     - "traefik.enable=true"
- #     - "traefik.http.routers.app.rule=Host(`app.${PUB_IP}.nip.io`)"
- #     - "traefik.http.routers.app.service=app"
- #     - "traefik.http.services.app.loadbalancer.server.port=8080"
- #     - "traefik.http.routers.app.tls=true"
- #     - "traefik.http.routers.app.entryPoints=web,websecure"
- #     - "traefik.http.routers.app.tls.certresolver=le"
+  app:
+    image: openjdk
+    container_name: clientone
+    command: "java -jar /data/app-0.1.0.jar"
+    restart: unless-stopped
+    volumes:
+      - ./:/data/
+    labels:
+      - "traefik.enable=true"
+#      - "traefik.http.routers.app.rule=Host(`app.${PUB_IP}.nip.io`)"
+      - "traefik.http.routers.app.rule=Host(`app.86-119-34-194.nip.io`)"
+      - "traefik.http.routers.app.service=app"
+      - "traefik.http.services.app.loadbalancer.server.port=8080"
+      - "traefik.http.routers.app.tls=true"
+      - "traefik.http.routers.app.entryPoints=web,websecure"
+      - "traefik.http.routers.app.tls.certresolver=le"
       
-#  whoami:
-#    image: "traefik/whoami"
-#    container_name: "simple-service"
-#    labels:
-#      - "traefik.enable=true"
+  whoami:
+    image: "traefik/whoami"
+    container_name: "simple-service"
+    labels:
+      - "traefik.enable=true"
       # Get routes from http
 #      - "traefik.http.routers.whoami.rule=Host(`whoami.${PUB_IP}.nip.io`)"
-#      - "traefik.http.routers.whoami.service=whoami"
-#      - "traefik.http.services.whoami.loadbalancer.server.port=80"
-#      - "traefik.http.routers.whoami.entrypoints=web"
+      - "traefik.http.routers.whoami.rule=Host(`whoami.86-119-34-194.nip.io`)"
+      - "traefik.http.routers.whoami.service=whoami"
+      - "traefik.http.services.whoami.loadbalancer.server.port=80"
+      - "traefik.http.routers.whoami.entrypoints=web"
       # Middleware-Test 
       #- traefik.http.routers.whoami.middlewares=auth
 #      - traefik.http.middlewares.auth.basicauth.users=test:xxx
       # Redirect these routes to https
-#      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
-#      - "traefik.http.routers.whoami.middlewares=redirect-to-https@docker"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+      - "traefik.http.routers.whoami.middlewares=redirect-to-https@docker"
       # Get the routes from https
 #      - "traefik.http.routers.whoami-secured.rule=Host(`whoami.${PUB_IP}.nip.io`)"
-#      - "traefik.http.routers.whoami.service=whoami"
+      - "traefik.http.routers.whoami.service=whoami"
 #      - "traefik.http.services.whoami-secured.loadbalancer.server.port=80"
-#      - "traefik.http.routers.whoami-secured.entrypoints=websecure"
+      - "traefik.http.routers.whoami-secured.entrypoints=websecure"
        # Apply autentificiation with http challenge
-#      - "traefik.http.routers.whoami-secured.tls=true"
-#      - "traefik.http.routers.whoami-secured.tls.certresolver=le"
+      - "traefik.http.routers.whoami-secured.tls=true"
+      - "traefik.http.routers.whoami-secured.tls.certresolver=le"
 
