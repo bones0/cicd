@@ -96,7 +96,6 @@ services:
       - "traefik.http.routers.whoami.middlewares=redirect-to-https@docker"
       # Get the routes from https
 #      - "traefik.http.routers.whoami-secured.rule=Host(`whoami.${PUB_IP}.nip.io`)"
-      - "traefik.http.routers.whoami.service=whoami"
 #      - "traefik.http.services.whoami-secured.loadbalancer.server.port=80"
       - "traefik.http.routers.whoami-secured.entrypoints=websecure"
        # Apply autentificiation with http challenge
