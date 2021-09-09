@@ -4,6 +4,7 @@ services:
   traefik:
     image: "traefik:v2.0.1"
     command:
+      - "--log.level=DEBUG"
       - --entrypoints.web.address=:80
       - --providers.docker
       - --api.insecure
