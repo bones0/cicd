@@ -19,9 +19,9 @@ services:
     ports:
       - "80:80"
       - "443:443"
-      - "8080:8080" #traefik web-Dashboard
+      - "8080:8080"
     volumes:
-      - "./letsencrypt:/etc/traefik/acme"
+      - "./letsencrypt:/letsencrypt"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
     restart: unless-stopped
     labels:
