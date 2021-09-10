@@ -69,8 +69,8 @@ services:
       - ./:/data/
     labels:
       - "traefik.enable=true"
-#      - "traefik.http.routers.app.rule=Host(`app.${PUB_IP}.nip.io`)"
-      - "traefik.http.routers.app.rule=Host(`app.86-119-34-194.nip.io`)"
+      - "traefik.http.routers.app.rule=Host(`app.${PUB_IP}.nip.io`)"
+#      - "traefik.http.routers.app.rule=Host(`app.86-119-34-194.nip.io`)"
       - "traefik.http.routers.app.service=app"
       - "traefik.http.services.app.loadbalancer.server.port=8080"
       - "traefik.http.routers.app.tls=true"
@@ -83,8 +83,8 @@ services:
     labels:
       - "traefik.enable=true"
       # Get routes from http
-#      - "traefik.http.routers.whoami.rule=Host(`whoami.${PUB_IP}.nip.io`)"
-      - "traefik.http.routers.whoami.rule=Host(`whoami.86-119-34-194.nip.io`)"
+      - "traefik.http.routers.whoami.rule=Host(`whoami.${PUB_IP}.nip.io`)"
+#      - "traefik.http.routers.whoami.rule=Host(`whoami.86-119-34-194.nip.io`)"
       - "traefik.http.routers.whoami.service=whoami"
       - "traefik.http.services.whoami.loadbalancer.server.port=80"
       - "traefik.http.routers.whoami.entrypoints=web,websecure"
