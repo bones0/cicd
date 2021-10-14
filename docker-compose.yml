@@ -83,6 +83,17 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: 8nz7s0a    
+
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: 8nz7s0a
+      ME_CONFIG_MONGODB_URL: mongodb://root:8nz7s0a@mongo:27017/
       
   whoami:
     image: "traefik/whoami"
