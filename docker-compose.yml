@@ -85,8 +85,6 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: 8nz7s0a    
     volumes:
       - database:/data/db
-volumes:
-  database:
 
   mongo-express:
     image: mongo-express
@@ -125,3 +123,5 @@ volumes:
       - "traefik.http.routers.whoami.tls=true"
       - "traefik.http.routers.whoami.tls.certresolver=le"
 
+volumes:
+  database:
