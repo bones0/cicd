@@ -89,7 +89,7 @@ services:
   mongo-express:
     image: mongo-express
     container_name: dbadmin
-    restart: always
+    restart: unless-stopped
     ports:
       - 8081:8081
     environment:
