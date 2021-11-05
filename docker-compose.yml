@@ -91,7 +91,7 @@ services:
 # only for testing! Not secure!
   dbadmin:
     image: mongo-express
-    container_name: dbadmin
+#    container_name: dbadmin
     restart: unless-stopped
 #    ports:
 #      - 8081:8081
