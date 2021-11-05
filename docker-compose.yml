@@ -72,7 +72,7 @@ services:
       - "traefik.http.routers.app.rule=Host(`app.${PUB_IP}.nip.io`)"
 #      - "traefik.http.routers.app.rule=Host(`app.86-119-34-194.nip.io`)"
       - "traefik.http.routers.app.service=app"
-      - "traefik.http.services.app.loadbalancer.server.port=8080"
+      - "traefik.http.services.app.loadbalancer.server.port=8081"
       - "traefik.http.routers.app.tls=true"
       - "traefik.http.routers.app.entryPoints=web,websecure"
       - "traefik.http.routers.app.tls.certresolver=le"
