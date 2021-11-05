@@ -102,12 +102,12 @@ services:
 
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.mongo-express.rule=Host(`mongo-express.${PUB_IP}.nip.io`)"
-      - "traefik.http.routers.mongo-express.service=mongo-express"
-      - "traefik.http.services.mongo-express.loadbalancer.server.port=8081"
-      - "traefik.http.routers.mongo-express.tls=true"
-      - "traefik.http.routers.mongo-express.entryPoints=web,websecure"
-      - "traefik.http.routers.mongo-express.tls.certresolver=le"
+      - "traefik.http.routers.dbadmin.rule=Host(`dbadmin.${PUB_IP}.nip.io`)"
+      - "traefik.http.routers.dbadmin.service=dbadmin"
+      - "traefik.http.services.dbadmin.loadbalancer.server.port=8081"
+      - "traefik.http.routers.dbadmin.tls=true"
+      - "traefik.http.routers.dbadmin.entryPoints=web,websecure"
+      - "traefik.http.routers.dbadmin.tls.certresolver=le"
       
   whoami:
     image: "traefik/whoami"
