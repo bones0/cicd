@@ -89,7 +89,7 @@ services:
       - database:/data/db
 
 # only for testing! Not secure!
-  mongo-express:
+  dbadmin:
     image: mongo-express
     container_name: dbadmin
     restart: unless-stopped
