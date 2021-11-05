@@ -77,25 +77,37 @@ services:
       - "traefik.http.routers.app.entryPoints=web,websecure"
       - "traefik.http.routers.app.tls.certresolver=le"
 
+# Don't forget to copy the global volume declaration too for making mongodb run!
   mongodb:
     image: mongo
     container_name: mongodb
+    restart: unless-stopped
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: 8nz7s0a    
+      MONGO_INITDB_ROOT_PASSWORD: 8nP7s0a    
     volumes:
       - database:/data/db
 
+# only for testing! Not secure!
   mongo-express:
     image: mongo-express
     container_name: dbadmin
     restart: unless-stopped
-    ports:
-      - 8081:8081
+#    ports:
+#      - 8081:8081
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: 8nz7s0a
-      ME_CONFIG_MONGODB_URL: mongodb://root:8nz7s0a@mongodb:27017/
+      ME_CONFIG_MONGODB_ADMINPASSWORD: 8nP7s0a
+      ME_CONFIG_MONGODB_URL: mongodb://root:8nP7s0a@mongodb:27017/
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.mongo-express.rule=Host(`dbadmin.${PUB_IP}.nip.io`)"
+      - "traefik.http.routers.mongo-express.service=mongo-express"
+      - "traefik.http.services.mongo-express.loadbalancer.server.port=8080"
+      - "traefik.http.routers.mongo-express.tls=true"
+      - "traefik.http.routers.mongo-express.entryPoints=web,websecure"
+      - "traefik.http.routers.mongo-express.tls.certresolver=le"
       
   whoami:
     image: "traefik/whoami"
@@ -124,5 +136,6 @@ services:
       - "traefik.http.routers.whoami.tls=true"
       - "traefik.http.routers.whoami.tls.certresolver=le"
 
+#important for mongodb:
 volumes:
   database:
