@@ -59,56 +59,6 @@ services:
       - "traefik.http.routers.http-catchall.middlewares=redirect-to-https"
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
   
-
-  app:
-    image: openjdk
-    container_name: clientone
-    command: "java -jar /data/app-0.1.0.jar"
-    restart: unless-stopped
-    volumes:
-      - ./:/data/
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.app.rule=Host(`app.${PUB_IP}.nip.io`)"
-#      - "traefik.http.routers.app.rule=Host(`app.86-119-34-194.nip.io`)"
-      - "traefik.http.routers.app.service=app"
-      - "traefik.http.services.app.loadbalancer.server.port=8081"
-      - "traefik.http.routers.app.tls=true"
-      - "traefik.http.routers.app.entryPoints=web,websecure"
-      - "traefik.http.routers.app.tls.certresolver=le"
-
-# Don't forget to copy the global volume declaration too for making mongodb run!
-  mongodb:
-    image: mongo
-    container_name: mongodb
-    restart: unless-stopped
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: 8nP7s0a    
-    volumes:
-      - database:/data/db
-
-# only for testing! Not secure!
-  dbadmin:
-    image: mongo-express
-    container_name: dbadmin
-    restart: unless-stopped
-#    ports:
-#      - 8081:8081
-    environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: 8nP7s0a
-      ME_CONFIG_MONGODB_URL: mongodb://root:8nP7s0a@mongodb:27017/
-
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.dbadmin.rule=Host(`dbadmin.${PUB_IP}.nip.io`)"
-      - "traefik.http.routers.dbadmin.service=dbadmin"
-      - "traefik.http.services.dbadmin.loadbalancer.server.port=8081"
-      - "traefik.http.routers.dbadmin.tls=true"
-      - "traefik.http.routers.dbadmin.entryPoints=web,websecure"
-      - "traefik.http.routers.dbadmin.tls.certresolver=le"
-      
   whoami:
     image: "traefik/whoami"
     container_name: "simple-service"
@@ -136,6 +86,53 @@ services:
       - "traefik.http.routers.whoami.tls=true"
       - "traefik.http.routers.whoami.tls.certresolver=le"
 
+  app:
+    image: openjdk
+    container_name: clientone
+    command: "java -jar /data/app-0.1.0.jar"
+    restart: unless-stopped
+    volumes:
+      - ./:/data/
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.app.rule=Host(`app.${PUB_IP}.nip.io`)"
+#      - "traefik.http.routers.app.rule=Host(`app.86-119-34-194.nip.io`)"
+      - "traefik.http.routers.app.service=app"
+      - "traefik.http.services.app.loadbalancer.server.port=8081"
+      - "traefik.http.routers.app.tls=true"
+      - "traefik.http.routers.app.entryPoints=web,websecure"
+      - "traefik.http.routers.app.tls.certresolver=le"
+
+# Don't forget to copy the global volume declaration too for making mongodb run!
+  mongodb1:
+    image: mongo
+    container_name: mongodb1
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 8nP7s0a    
+    volumes:
+      - database1:/data/db
+
+# only for testing! Not secure!
+  dbadmin1:
+    image: mongo-express
+    container_name: dbadmin1
+    restart: unless-stopped
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: 8nP7s0a
+      ME_CONFIG_MONGODB_URL: mongodb://root:8nP7s0a@mongodb1:27017/
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.dbadmin1.rule=Host(`dbadmin1.${PUB_IP}.nip.io`)"
+      - "traefik.http.routers.dbadmin1.service=dbadmin1"
+      - "traefik.http.services.dbadmin1.loadbalancer.server.port=8081"
+      - "traefik.http.routers.dbadmin1.tls=true"
+      - "traefik.http.routers.dbadmin1.entryPoints=web,websecure"
+      - "traefik.http.routers.dbadmin1.tls.certresolver=le"
+
 #important for mongodb:
 volumes:
-  database:
+  database1:
