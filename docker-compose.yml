@@ -102,7 +102,7 @@ services:
 
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.mongo-express.rule=Host(`dbadmin.${PUB_IP}.nip.io`)"
+      - "traefik.http.routers.mongo-express.rule=Host(`mongo-express.${PUB_IP}.nip.io`)"
       - "traefik.http.routers.mongo-express.service=mongo-express"
       - "traefik.http.services.mongo-express.loadbalancer.server.port=8081"
       - "traefik.http.routers.mongo-express.tls=true"
