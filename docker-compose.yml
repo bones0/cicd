@@ -103,6 +103,8 @@ services:
       - "traefik.http.routers.app.entryPoints=web,websecure"
       - "traefik.http.routers.app.tls.certresolver=le"
 
+# For more independent MongoDB-servers increment the number in all names. i.e. mongodb2, dbadmin2...
+
 # Don't forget to copy the global volume declaration too for making mongodb run!
   mongodb1:
     image: mongo
@@ -110,23 +112,23 @@ services:
     restart: unless-stopped
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: 8nP7s0a    
+      MONGO_INITDB_ROOT_PASSWORD: 8nP7s0a    # Can not be changed later on
     volumes:
       - database1:/data/db
 
-# only for testing! Not secure!
+# MongoDB Admin GUI. Corresponds to one specific MongoDB server each.
   dbadmin1:
     image: mongo-express
     container_name: dbadmin1
     restart: unless-stopped
     environment:
-      ME_CONFIG_BASICAUTH_USERNAME: student
-      ME_CONFIG_BASICAUTH_PASSWORD: studious
+      ME_CONFIG_BASICAUTH_USERNAME: student    # Access to web interface: username
+      ME_CONFIG_BASICAUTH_PASSWORD: studious   # Access to web interface: password
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: 8nP7s0a
-      ME_CONFIG_MONGODB_PORT: 27017
+      ME_CONFIG_MONGODB_ADMINPASSWORD: 8nP7s0a  # must correspond to the db
+      ME_CONFIG_MONGODB_PORT: 27017 # Default 27017
       ME_CONFIG_MONGODB_SERVER: mongodb1
-#      ME_CONFIG_MONGODB_URL: mongodb://root:8nP7s0a@mongodb1:27017/
+#      ME_CONFIG_MONGODB_URL: mongodb://root:8nP7s0a@mongodb1:27017/  # This string can be used in Java
 
     labels:
       - "traefik.enable=true"
