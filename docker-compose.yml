@@ -124,9 +124,9 @@ services:
       ME_CONFIG_BASICAUTH_PASSWORD: studious
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: 8nP7s0a
-      ME_CONFIG_MONGODB_PORT: 21017
+      ME_CONFIG_MONGODB_PORT: 27017
       ME_CONFIG_MONGODB_SERVER: mongodb1
-      ME_CONFIG_MONGODB_URL: mongodb://root:8nP7s0a@mongodb1:27017/
+#      ME_CONFIG_MONGODB_URL: mongodb://root:8nP7s0a@mongodb1:27017/
 
     labels:
       - "traefik.enable=true"
