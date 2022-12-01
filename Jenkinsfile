@@ -1,14 +1,14 @@
 pipeline {
   agent {
-    node {
-      label 'stages'
+    docker {
+      image 'maven:3.8.6-openjdk-11-slim'
     }
 
   }
   stages {
     stage('build') {
       steps {
-        sh 'node --version'
+        sh 'mvn --version'
       }
     }
 
