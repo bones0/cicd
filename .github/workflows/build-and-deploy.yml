@@ -56,7 +56,7 @@ jobs:
     - name: Executing remote command
       uses: appleboy/ssh-action@v0.1.3
       with:
-        host: ${{ secrets.SSH_HOST }}
+        HOST: ${{ secrets.SSH_HOST }}
         USERNAME: ${{ secrets.SSH_USER }}
         PORT: 22
         KEY: ${{ secrets.SSH_PRIVATE_KEY }}
